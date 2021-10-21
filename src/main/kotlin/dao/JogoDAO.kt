@@ -112,6 +112,7 @@ class JogoDAO : GenericoDAO {
         preparedStatement?.setInt(4, jogo.data_de_publicacao)
         preparedStatement?.setInt(5,jogo.id)
         preparedStatement?.executeUpdate()
+        connectionDAO.close()
     }
 
     override fun deletar(id: Int) {
