@@ -10,13 +10,13 @@ class ConnectionDAO {
     var preparedStatement : PreparedStatement?
 
     init {
-        this.connection = DriverManager.getConnection(SharedPaths.STRING_DE_CONEXAO_MARIADB_JDBC)
+        this.connection = DriverManager.getConnection(SharedPaths.STRING_DE_CONEXAO_MARIADB_JDBC, SharedPaths.USUARIO_CONEXAO,SharedPaths.SENHA_CONEXAO)
         this.statement = null
         this.resultSet = null
         this.preparedStatement = null
     }
 
-    fun executeQuery(sqlString: String): ResultSet?{
+    fun executeQuery(sqlString : String) : ResultSet?{
         this.statement = this.connection?.createStatement()
         this.resultSet = this.statement?.executeQuery(sqlString)
         return this.resultSet
