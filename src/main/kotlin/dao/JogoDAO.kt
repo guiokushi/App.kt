@@ -62,18 +62,66 @@ class JogoDAO : GenericoDAO {
     }
 
     override fun inserirUm(objeto: Any) {
-        TODO("Not yet implemented")
+        val connectionDAO = ConnectionDAO()
+        val preparedStatement = connectionDAO.getPreparedStatement("""
+            INSERT INTO Jogo 
+            (nome, empresa, plataforma,data_de_publicacao) 
+            VALUES (?,?,?,?);
+            """.trimMargin())
+        val jogo = objeto as Jogo
+        preparedStatement?.setString(1,jogo.nome)
+        preparedStatement?.setString(2,jogo.empresa)
+        preparedStatement?.setString(3,jogo.plataforma)
+        preparedStatement?.setInt(4,jogo.data_de_publicacao)
+        preparedStatement?.executeUpdate()
+        //Banco está em auto-commit()
+
+        connectionDAO.close()
     }
 
     override fun inserirVarios(lista: List<Any>) {
-        TODO("Not yet implemented")
+        val connectionDAO = ConnectionDAO()
+        val preparedStatement = connectionDAO.getPreparedStatement("""
+            INSERT INTO Jogo 
+            (nome, empresa, plataforma,data_de_publicacao) 
+            VALUES (?,?,?,?);
+            """.trimMargin())
+        for (objeto in lista) {
+            val jogo = objeto as Jogo
+            preparedStatement?.setString(1, jogo.nome)
+            preparedStatement?.setString(2, jogo.empresa)
+            preparedStatement?.setString(3, jogo.plataforma)
+            preparedStatement?.setInt(4, jogo.data_de_publicacao)
+            preparedStatement?.executeUpdate()
+            //Banco está em auto-commit()
+        }
+        connectionDAO.close()
     }
 
     override fun atualizar(objeto: Any) {
-        TODO("Not yet implemented")
+        val connectionDAO = ConnectionDAO()
+        val preparedStatement = connectionDAO.getPreparedStatement("""
+            UPDATE Jogo 
+            SET nome = ?, empresa = ?, plataforma = ?, data_de_publicacao= ? 
+            WHERE id = ?;
+            """.trimMargin())
+        val jogo = objeto as Jogo
+        preparedStatement?.setString(1, jogo.nome)
+        preparedStatement?.setString(2, jogo.empresa)
+        preparedStatement?.setString(3, jogo.plataforma)
+        preparedStatement?.setInt(4, jogo.data_de_publicacao)
+        preparedStatement?.setInt(5,jogo.id)
+        preparedStatement?.executeUpdate()
     }
 
     override fun deletar(id: Int) {
-        TODO("Not yet implemented")
+        val connectionDAO = ConnectionDAO()
+        val preparedStatement = connectionDAO.getPreparedStatement("""
+            DELETE FROM Jogo  
+            WHERE id = ?;
+            """.trimMargin())
+        preparedStatement?.setInt(1,id)
+        preparedStatement?.executeUpdate()
+        connectionDAO.close()
     }
 }
