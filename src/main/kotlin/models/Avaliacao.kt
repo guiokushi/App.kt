@@ -4,7 +4,7 @@ import java.util.*
 
 data class Avaliacao(
     val id: Int,
-    val avaliacao: String,
+    val avaliacao: Int,
     val idReview: Int,
-    val data_de_postagem: Date
+    val data_de_postagem: Int
 )
